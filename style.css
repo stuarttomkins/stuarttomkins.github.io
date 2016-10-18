@@ -1,0 +1,93 @@
+/*
+Name: Stuart Tomkins
+Email: stuart_tomkins@cs.uml.edu
+UMass Lowell 91.461 GUI Programming I
+Date Created: 10/1/16
+Date Submitted: 10/4/16
+Description: This is the second iteration of our web page, now styled with CSS as opposed to plain HTML.
+*/
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ccffe6;
+}
+
+#name {
+  background-color: black;
+  padding-bottom: 1em;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#name h1 {
+  margin:0;
+  text-align:center;
+  color: white;
+}
+
+#nav ul {
+  background-color: #444;
+  text-align: center;
+  width: 60%;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#nav li {
+  display: inline;
+  height: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#nav a {
+  text-decoration: none;
+  color: white;
+}
+
+#nav a:hover {
+  background-color: black;
+}
+
+#content {
+  width: 60%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#content h2 {
+  text-align:center;
+}
+
+#content p {
+  text-align: left;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+#content p::first-letter {
+  font-style: italic;
+  font-size: 1.4em;
+}
+
+#content li {
+  padding: 2px;
+}
+
+footer {
+  text-align: center;
+  font-style: italic;
+  padding-bottom: 10px;
+}
