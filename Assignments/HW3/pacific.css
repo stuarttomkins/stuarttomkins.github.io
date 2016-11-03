@@ -1,0 +1,108 @@
+/*
+Name: Stuart Tomkins
+Email: stuart_tomkins@cs.uml.edu
+UMass Lowell 91.461 GUI Programming I
+Date Created: 9/18/16
+Date Submitted: 9/22/2016
+Description: For this assignment we were tasked to provide appropriate CSS to model an HTML
+file after a given template. 
+*/
+
+header, hgroup, nav, footer, figure, figcaption, aside, section, article {
+	display: block;
+}
+body {
+	background-color: #00569f;
+	background-image: url(ptrbackground.jpg);
+	color: #666666;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+nav ul {
+	font-size: 1.2em;
+	list-style: none;
+	color: #666666;
+}
+nav a {
+	text-decoration: none;
+	color: #000033;
+}
+
+nav a:visited {
+	color: #344873;
+}
+nav a:hover {
+	color: #FFFFFF;
+}
+h1 {
+	background: #000033 url("sunset.jpg") right no-repeat;
+	color: white;
+	height: 1em;
+	width: 40em;
+	padding-top: 0.4em;
+  padding-bottom: 0.4em;
+	margin: 0;
+}
+h2 {
+	color: #3399CC;
+}
+h1,
+h2 {
+	font-family: Georgia, "Times New Roman", serif;
+}
+#contact {
+	font-size: 90%;
+	padding-left: 30em;
+}
+dt {
+	color: #000033;
+}
+footer {
+	margin-left: 16em;
+	margin bottom: 1em;
+	font-family: Georgia, "Times New Roman", serif;
+}
+
+nav {
+	background-color: #3399CC;
+	width : 15em;
+	height: 43.4em;
+	float: left;
+	font-weight: bold;
+}
+
+#content {
+	width: 60em;
+	height: 40em;
+	padding-left: 3em;
+	padding-top: 0.5em;
+	background-color: white;
+	margin-left: 15em;
+}
+
+#content p {
+	padding-left: 27em;
+}
+
+#content ul {
+	padding-left: 28em;
+}
+
+#content img {
+	height: 20em;
+	width: 25em;
+	float: left;
+}
+
+ul {
+	list-style-image: url(marker.gif);
+}
+
+#wrapper {
+	width: 80em;
+	height: 47em;
+	min-width: 600px;
+	background: #ffffff;
+	margin-left: auto;
+	margin-right: auto;
+}

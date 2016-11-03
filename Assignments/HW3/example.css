@@ -1,0 +1,78 @@
+body {
+  background: #ffffff;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/91758/background.jpg);
+  top left repeat-x;
+  color: #666666;
+  font-family: "Arial, Helvectia, Sans-Serif";
+  padding-left: 50%;
+}
+
+h1 {
+  color: #ffffff;
+  margin-bottom: 0;
+  background: #000033 url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/91758/sunset.jpg") top right;
+  padding: 10px;
+  font-family: "Georgia, Times New Roman, Serif";
+}
+
+#nav {
+  background: #90c7e3;
+  padding-left: 20px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+h2 {
+  color: #3399cc;
+  font-family: "Georgia, Times New Roman, Serif";
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+dt {
+  color: #000033;
+}
+
+.resort {
+  color: #5c7fa3;
+  font-weight: bold;
+}
+
+h3 {
+  color: #000033;
+  font-family: "Georgia, Times New Roman, Serif";
+}
+
+ul {
+  list-style-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/91758/marker.gif);
+}
+
+#wrapper {
+  width: 80%;
+  min-width: 960px;
+  background: #ffffff;
+  box-shadow: 5px 5px 5px #000033;
+}
+
+#content {
+  padding-top: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+#content ul {
+  list-style-position: inside;
+}
+
+#contact {
+  font-size: 90%;
+}
+
+footer {
+  font-style: italic;
+  font-family: " Georgia, Times New Roman, Times, Serif";
+  padding: 20px;
+  font-size: 75%;
+}
