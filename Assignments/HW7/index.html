@@ -1,0 +1,42 @@
+<!--
+Name: Stuart Tomkins
+Email: stuart_tomkins@cs.uml.edu
+UMass Lowell 91.461 GUI Programming I
+Date Created: 11/1/16
+Date Submitted: 11/3/16
+Description: In this assignment we are creating a multiplication table
+dynamically through input entered in the form of this page.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiplication Table</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.validate.js"></script>
+</head>
+<body>
+  <p>Please enter the bounds of the multiplication table:</p>
+
+  <form id="form" method="" action="">
+    <label for="xStart">xStart</label>
+    <input id="xStart" name="xStart">
+    <br>
+    <label for="xEnd">xEnd</label>
+    <input id="xEnd" name="xEnd">
+    <br>
+    <label for="yStart">yStart</label>
+    <input id="yStart" name="yStart">
+    <br>
+    <label for="yEnd">yEnd</label>
+    <input id="yEnd" name="yEnd">
+    <br/>
+    <input id="submit" type="button" value="Submit">
+  </form>
+
+  <table id="multiplicationTable"></table>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
