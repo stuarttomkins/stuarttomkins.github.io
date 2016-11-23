@@ -1,0 +1,57 @@
+<!--
+Name: Stuart Tomkins
+Email: stuart_tomkins@cs.uml.edu
+UMass Lowell 91.461 GUI Programming I
+Date Created: 11/20/16
+Date Submitted: 11/22/16
+Description: In this assignment we added JQuery UI elements such as a slider
+for each input and tabs for the tables.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiplication Table</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.validate.js"></script>
+  <script src="js/jquery-ui.js"></script>
+</head>
+<body>
+  <div id="Tabs">
+    <ul>
+      <li><a href="#input">Input</a></li>
+    </ul>
+    <div id="input">
+      <p>Please enter the bounds of the multiplication table:</p>
+
+      <form id="form" method="" action="">
+        <label for="xStart">xStart</label>
+        <input id="xStart" name="xStart">
+        <br>
+          <div id="xStartSlider"></div>
+        <br>
+        <label for="xEnd">xEnd</label>
+        <input id="xEnd" name="xEnd">
+        <br>
+          <div id="xEndSlider"></div>
+        <br>
+        <label for="yStart">yStart</label>
+        <input id="yStart" name="yStart">
+        <br>
+          <div id="yStartSlider"></div>
+        <br>
+        <label for="yEnd">yEnd</label>
+        <input id="yEnd" name="yEnd">
+        <br>
+          <div id="yEndSlider"></div>
+        <br>
+        <input id="submit" type="button" value="Submit">
+        <input id="closeTabs" type="button" value="Close Tabs">
+      </form>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
