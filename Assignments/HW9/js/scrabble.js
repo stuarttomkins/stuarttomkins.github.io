@@ -137,7 +137,7 @@ function validateWord()
 
   while (Board[i] != null)
   {
-    word.push(Board[i]);
+    word.push(Board[i].letter);
     i++;
   }
 
