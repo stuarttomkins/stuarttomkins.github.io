@@ -44,23 +44,6 @@ ScrabbleTiles["W"] = { "value" : 4,  "original-distribution" : 2,  "number-remai
 ScrabbleTiles["X"] = { "value" : 8,  "original-distribution" : 1,  "number-remaining" : 1,  "image" : "\"img/Scrabble_Tile_X.jpg\""  } ;
 ScrabbleTiles["Y"] = { "value" : 4,  "original-distribution" : 2,  "number-remaining" : 2,  "image" : "\"img/Scrabble_Tile_Y.jpg\""  } ;
 ScrabbleTiles["Z"] = { "value" : 10, "original-distribution" : 1,  "number-remaining" : 1,  "image" : "\"img/Scrabble_Tile_Z.jpg\""  } ;
-ScrabbleTiles["_"] = { "value" : 0,  "original-distribution" : 2,  "number-remaining" : 2,  "image" : "\"img/Scrabble_Tile_A.jpg\""  } ;
-
-function dealTiles()
-{
-  var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-
-  for (var i = 0; i < 7; i++)
-  {
-    var rand = Math.floor(Math.random() * 27);
-    PlayerHand[i] = options[rand];
-    --ScrabbleTiles[options[rand]]["number-remaining"];
-    $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
-    $("#draggable-" + (i+1)).draggable({
-      snap: ".ui-widget-header"
-    });
-  }
-}
 
 $( function() {
     dealTiles();
@@ -102,6 +85,22 @@ $( function() {
       });
 
   });
+
+  function dealTiles()
+  {
+    var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (var i = 0; i < 7; i++)
+    {
+      var rand = Math.floor(Math.random() * 26);
+      PlayerHand[i] = options[rand];
+      --ScrabbleTiles[options[rand]]["number-remaining"];
+      $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
+      $("#draggable-" + (i+1)).draggable({
+        snap: ".ui-widget-header"
+      });
+    }
+  }
 
   function validateBoard()
   {
