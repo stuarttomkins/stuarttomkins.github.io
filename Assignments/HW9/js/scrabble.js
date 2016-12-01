@@ -107,7 +107,7 @@ $( function() {
   {
     var null_flag = false, letter_flag = false, size = 0, i = 0;
 
-    while (Board[i] == null)
+    while (Board[i] == null && i < 7)
       i++
 
     for (var j = i + 1; j < Board.length; j++)
@@ -130,8 +130,9 @@ $( function() {
 function validateWord()
 {
   var word = [];
+  var i = 0;
 
-  while (Board[i] == null)
+  while (Board[i] == null && i < 7)
     i++;
 
   while (Board[i] != null)
