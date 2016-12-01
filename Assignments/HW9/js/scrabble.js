@@ -130,15 +130,19 @@ $( function() {
 function validateWord()
 {
   var word = [];
-  var i = 0;
+  var i = 0, j = 0;
 
   while (Board[i] == null && i < 7)
     i++;
 
   while (Board[i] != null)
   {
-    word.push(Board[i].letter);
-    i++;
+    if (j == 0)
+      word = Board[i].letter;
+    else
+      word += Board[i].letter;
+    
+    i++; j++;
   }
 
     if (dict[word])
