@@ -141,9 +141,10 @@ function validateWord()
       word = Board[i].letter;
     else
       word += Board[i].letter;
-    
+
     i++; j++;
   }
+  word = word.toLowerCase();
 
     if (dict[word])
       return word;
