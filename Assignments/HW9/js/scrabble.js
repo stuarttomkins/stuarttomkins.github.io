@@ -136,7 +136,10 @@ function validateWord()
     i++;
 
   while (Board[i] != null)
+  {
     word.push(Board[i]);
+    i++;
+  }
 
     if (dict[word])
       return word;
