@@ -9,7 +9,9 @@ for each input and tabs for the tables.
 */
 var ScrabbleTiles = {};
 var PlayerHand = {};
+var LettersPlayed = "";
 var Board = new Array(7);
+
 for (var i = 0; i < Board.length; i++) {
   Board[i] = null;
 }
@@ -60,6 +62,8 @@ $( function() {
     });
     $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
 
+    createLetterDist();
+
     $(".ui-widget-header").droppable(
       {
         drop: function( event, ui )
@@ -67,20 +71,44 @@ $( function() {
           var letter_index = ui.draggable["0"].attributes["0"].value;
           var tile_index = (+event.target.id) - 1;
 
-          Board[tile_index] = {
+          for (var i = 0; i < 7; i++)
+          {
+            if (PlayerHand[i] == letter_index)
+            {
+              LettersPlayed += letter_index;
+              PlayerHand[i] = null;
+              break;
+            }
+          }
+
+          Board[tile_index] =
+          {
             letter: letter_index,
             value: ScrabbleTiles[letter_index].value
           }
-
           turn_score += Board[tile_index].value;
+
           $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score );
         },
         out: function(event, ui)
         {
-          var tile_index = (+event.target.id) -1;
-          turn_score -= Board[tile_index].value;
-          Board[tile_index] = null;
-          $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
+            var letter_index = ui.draggable["0"].attributes["0"].value;
+            var tile_index = (+event.target.id) - 1;
+
+            turn_score -= Board[tile_index].value;
+            Board[tile_index] = null;
+            $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
+
+            for (var i = 0; i < 7; i++)
+            {
+              if (LettersPlayed.includes(letter_index) && PlayerHand[i] == null)
+              {
+                PlayerHand[i] = letter_index;
+                var index = LettersPlayed.indexOf(letter_index);
+                LettersPlayed = LettersPlayed.slice(0, index) + LettersPlayed.slice(index + 1, LettersPlayed.length);
+                break;
+              }
+            }
         }
       });
 
@@ -93,13 +121,53 @@ $( function() {
     for (var i = 0; i < 7; i++)
     {
       var rand = Math.floor(Math.random() * 26);
+
+      while(ScrabbleTiles[options[rand]]["number-remaining"] == 0)
+        rand = Math.floor(Math.random() * 26);
+
       PlayerHand[i] = options[rand];
       --ScrabbleTiles[options[rand]]["number-remaining"];
       $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
       $("#draggable-" + (i+1)).draggable({
-        snap: ".ui-widget-header"
+        snap: ".ui-widget-header",
+        snapMode: "inner"
       });
     }
+  }
+
+  function reDealTiles()
+  {
+    var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var rand = Math.floor(Math.random() * 26);
+
+    //force deal previous tiles from hand from PlayerHand
+    for (var i = 0; i < 7; i++)
+    {
+      if (PlayerHand[i] != null)
+      {
+        $("#rack").append("<div data-letter=\"" + PlayerHand[i] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[PlayerHand[i]].image + " height=50px width=50px></div>");
+        $("#draggable-" + (i+1)).draggable({
+          snap: ".ui-widget-header",
+          snapMode: "inner"
+        });
+      }
+      else
+      {
+        var rand = Math.floor(Math.random() * 26);
+        while(ScrabbleTiles[options[rand]]["number-remaining"] == 0)
+          rand = Math.floor(Math.random() * 26);
+
+        PlayerHand[i] = options[rand];
+        --ScrabbleTiles[options[rand]]["number-remaining"];
+        $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
+        $("#draggable-" + (i+1)).draggable({
+          snap: ".ui-widget-header",
+          snapMode: "inner"
+        });
+      }
+    }
+
+  LettersPlayed = "";
   }
 
   function validateBoard()
@@ -161,6 +229,14 @@ function check()
       overall_score += turn_score;
       turn_score = 0;
       $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
+
+      for (var i = 0; i < Board.length; i++)
+      {
+            $("#draggable-" + (i+1)).draggable("destroy");
+            $("#draggable-" + (i+1)).remove();
+      }
+      reDealTiles();
+      createLetterDist();
     }
     else
     {
@@ -171,5 +247,54 @@ function check()
   else
   {
     alert("BOARD NOT VALIDATED");
+  }
+}
+
+
+function createLetterDist()
+{
+    var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (var i = 0; i < 26; i++)
+    {
+      if (i < 13)
+        $("#letterDist1").append("<p> " + options[i] + ": " + ScrabbleTiles[options[i]]["number-remaining"] + " / " + ScrabbleTiles[options[i]]["original-distribution"] + "</p>");
+      else
+        $("#letterDist2").append("<p> " + options[i] + ": " + ScrabbleTiles[options[i]]["number-remaining"] + " / " + ScrabbleTiles[options[i]]["original-distribution"] + "</p>");
+
+    }
+}
+
+function revert()
+{
+  turn_score = 0;
+  $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
+  for (var i = 0; i < Board.length; i++)
+  {
+        $("#draggable-" + (i+1)).draggable("destroy");
+        $("#draggable-" + (i+1)).remove();
+  }
+
+  var j = 0;
+  for (var i = 0; i < 7; i++)
+  {
+    if (PlayerHand[i] != null)
+    {
+      $("#rack").append("<div data-letter=\"" + PlayerHand[i] + "\"id=\"draggable-" + (j+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[PlayerHand[i]].image + " height=50px width=50px></div>");
+      $("#draggable-" + (j+1)).draggable({
+        snap: ".ui-widget-header",
+        snapMode: "inner"
+      });
+      j++;
+    }
+  }
+
+  for (var i = 0; i < LettersPlayed.length; i++)
+  {
+    $("#rack").append("<div data-letter=\"" + LettersPlayed[i] + "\"id=\"draggable-" + (j+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[LettersPlayed[i]].image + " height=50px width=50px></div>");
+    $("#draggable-" + (j+1)).draggable({
+      snap: ".ui-widget-header",
+      snapMode: "inner"
+    });
+    j++;
   }
 }

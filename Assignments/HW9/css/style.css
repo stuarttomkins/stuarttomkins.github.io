@@ -39,3 +39,17 @@ for each input and tabs for the tables.
   margin-top: 10px;
   height: 60px;
 }
+
+#letterDist1, #letterDist2
+{
+  height: 130px;
+  float:left;
+  display:inline;
+  margin: 10px;
+}
+
+#letterDist1 p, #letterDist2 p
+{
+  margin: 0;
+
+}
