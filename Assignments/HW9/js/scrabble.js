@@ -255,8 +255,8 @@ function createLetterDist()
 {
     var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  $("#letterDist1").empty();
-  $("#letterDist2").empty();
+  $("#letterDist1 p").empty();
+  $("#letterDist2 p").empty();
 
     for (var i = 0; i < 26; i++)
     {
