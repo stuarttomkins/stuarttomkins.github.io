@@ -301,4 +301,25 @@ function revert()
     });
     j++;
   }
+
+  for (var i = 0; i < 7; i++)
+  {
+    if (LettersPlayed.includes(letter_index) && PlayerHand[i] == null)
+    {
+      PlayerHand[i] = letter_index;
+      var index = LettersPlayed.indexOf(letter_index);
+      LettersPlayed = LettersPlayed.slice(0, index) + LettersPlayed.slice(index + 1, LettersPlayed.length);
+      break;
+    }
+  }
+
+  for(var i = 0; i < 7; i++)
+  {
+    if (Board[i] != null)
+    {
+      Board[i] = null;
+    }
+  }
+
+  LettersPlayed = "";
 }
