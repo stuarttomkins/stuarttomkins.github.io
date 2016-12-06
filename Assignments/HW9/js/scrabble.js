@@ -301,15 +301,13 @@ function revert()
     });
     j++;
   }
-
+  var j = 0;
   for (var i = 0; i < 7; i++)
   {
-    if (LettersPlayed.includes(letter_index) && PlayerHand[i] == null)
+    if(PlayerHand[i] == null)
     {
-      PlayerHand[i] = letter_index;
-      var index = LettersPlayed.indexOf(letter_index);
-      LettersPlayed = LettersPlayed.slice(0, index) + LettersPlayed.slice(index + 1, LettersPlayed.length);
-      break;
+      PlayerHand[i] = LettersPlayed[j];
+      j++;
     }
   }
 
