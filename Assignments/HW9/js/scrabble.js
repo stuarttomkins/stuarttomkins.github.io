@@ -19,6 +19,7 @@ for (var i = 0; i < Board.length; i++) {
 var turn_score = 0, overall_score = 0;
 
 // The dictionary lookup object
+// this was taken from the Piazza, Jesse Heines example
 var dict = {};
 
 ScrabbleTiles["A"] = { "value" : 1,  "original-distribution" : 9,  "number-remaining" : 9,  "image" : "\"img/Scrabble_Tile_A.jpg\""};
@@ -50,6 +51,8 @@ ScrabbleTiles["Z"] = { "value" : 10, "original-distribution" : 1,  "number-remai
 
 $( function() {
     dealTiles();
+
+    // this was also taken from the piazza
     // Do a jQuery Ajax request for the text dictionary
     $.get( "dict/dict.txt", function( txt ) {
         // Get an array of all the words
@@ -67,19 +70,12 @@ $( function() {
 
     $(".ui-widget-header").droppable(
       {
-        start: function(event, ui)
-        {
-          dragging = true;
-        },
-        stop: function(event, ui)
-        {
-          dragging = false;
-        },
         drop: function( event, ui )
         {
             var letter_index = ui.draggable["0"].attributes["0"].value;
             var tile_index = (+event.target.id) - 1;
 
+            // find the letter being played and update containers
             for (var i = 0; i < 7; i++)
             {
               if (PlayerHand[i] == letter_index)
@@ -89,7 +85,7 @@ $( function() {
                 break;
               }
             }
-
+            // fill board with letters and their values
             Board[tile_index] =
             {
               letter: letter_index,
@@ -101,8 +97,6 @@ $( function() {
         },
         out: function(event, ui)
         {
-          if(dragging == false)
-          {
             var letter_index = ui.draggable["0"].attributes["0"].value;
             var tile_index = (+event.target.id) - 1;
 
@@ -110,6 +104,7 @@ $( function() {
             Board[tile_index] = null;
             $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score);
 
+            //places the selected letter back into hand and out of the played letters
             for (var i = 0; i < 7; i++)
             {
               if (LettersPlayed.includes(letter_index) && PlayerHand[i] == null)
@@ -120,7 +115,6 @@ $( function() {
                 break;
               }
             }
-          }
         }
       });
 
@@ -133,7 +127,7 @@ $( function() {
     for (var i = 0; i < 7; i++)
     {
       var rand = Math.floor(Math.random() * 26);
-
+      // don't pick a letter with none remaining
       while(ScrabbleTiles[options[rand]]["number-remaining"] == 0)
         rand = Math.floor(Math.random() * 26);
 
@@ -142,7 +136,7 @@ $( function() {
       $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
       $("#draggable-" + (i+1)).draggable({
         snap: ".ui-widget-header",
-        snapMode: "inner"
+        snapMode: "inner",
       });
     }
   }
@@ -160,12 +154,13 @@ $( function() {
         $("#rack").append("<div data-letter=\"" + PlayerHand[i] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[PlayerHand[i]].image + " height=50px width=50px></div>");
         $("#draggable-" + (i+1)).draggable({
           snap: ".ui-widget-header",
-          snapMode: "inner"
+          snapMode: "inner",
         });
       }
       else
       {
         var rand = Math.floor(Math.random() * 26);
+        // don't pick a letter with none remaining
         while(ScrabbleTiles[options[rand]]["number-remaining"] == 0)
           rand = Math.floor(Math.random() * 26);
 
@@ -174,7 +169,7 @@ $( function() {
         $("#rack").append("<div data-letter=\"" + options[rand] + "\"id=\"draggable-" + (i+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[options[rand]].image + " height=50px width=50px></div>");
         $("#draggable-" + (i+1)).draggable({
           snap: ".ui-widget-header",
-          snapMode: "inner"
+          snapMode: "inner",
         });
       }
     }
@@ -182,13 +177,16 @@ $( function() {
   LettersPlayed = "";
   }
 
+  //makes sure that there are no spaces in the board, all letters adjacent
   function validateBoard()
   {
     var null_flag = false, letter_flag = false, size = 0, i = 0;
 
+    // skip leading empty board spaces
     while (Board[i] == null && i < 7)
       i++
 
+    // returns false if it finds a null surrounded by objects on the board
     for (var j = i + 1; j < Board.length; j++)
     {
       if (Board[j] != null)
@@ -206,6 +204,7 @@ $( function() {
     return true;
   }
 
+// construct a word from the board and check it against the dictionary
 function validateWord()
 {
   var word = [];
@@ -232,6 +231,8 @@ function validateWord()
 
 }
 
+// submit button check function, checks for valid board and word, deals with
+// re dealing and updating the container variables
 function check()
 {
   if(validateBoard())
@@ -250,6 +251,7 @@ function check()
       reDealTiles();
       createLetterDist();
 
+      // clear the board
       for(var i = 0; i < 7; i++)
       {
         if (Board[i] != null)
@@ -270,7 +272,7 @@ function check()
   }
 }
 
-
+// prints the remaining letters of each tile to the page
 function createLetterDist()
 {
     var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -288,6 +290,7 @@ function createLetterDist()
     }
 }
 
+// brings all tiles back to the starting position in rack and resets container variables
 function revert()
 {
   turn_score = 0;
@@ -306,7 +309,7 @@ function revert()
       $("#rack").append("<div data-letter=\"" + PlayerHand[i] + "\"id=\"draggable-" + (j+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[PlayerHand[i]].image + " height=50px width=50px></div>");
       $("#draggable-" + (j+1)).draggable({
         snap: ".ui-widget-header",
-        snapMode: "inner"
+        snapMode: "inner",
       });
       j++;
     }
@@ -317,11 +320,14 @@ function revert()
     $("#rack").append("<div data-letter=\"" + LettersPlayed[i] + "\"id=\"draggable-" + (j+1) + "\" class=\"ui-widget-content\"><img src=" + ScrabbleTiles[LettersPlayed[i]].image + " height=50px width=50px></div>");
     $("#draggable-" + (j+1)).draggable({
       snap: ".ui-widget-header",
-      snapMode: "inner"
+      snapMode: "inner",
     });
     j++;
   }
+
   var j = 0;
+
+  // refills player hand with the letters you just played
   for (var i = 0; i < 7; i++)
   {
     if(PlayerHand[i] == null)
@@ -330,7 +336,7 @@ function revert()
       j++;
     }
   }
-
+  // clears the board
   for(var i = 0; i < 7; i++)
   {
     if (Board[i] != null)
