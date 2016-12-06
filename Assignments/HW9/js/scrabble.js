@@ -11,6 +11,7 @@ var ScrabbleTiles = {};
 var PlayerHand = {};
 var LettersPlayed = "";
 var Board = new Array(7);
+var dragging = false;
 
 for (var i = 0; i < Board.length; i++) {
   Board[i] = null;
@@ -66,29 +67,40 @@ $( function() {
 
     $(".ui-widget-header").droppable(
       {
+        start: function(event, ui)
+        {
+          dragging = true;
+        },
+        stop: function(event, ui)
+        {
+          dragging = false;
+        },
         drop: function( event, ui )
         {
-          var letter_index = ui.draggable["0"].attributes["0"].value;
-          var tile_index = (+event.target.id) - 1;
-
-          for (var i = 0; i < 7; i++)
+          if(dragging == false)
           {
-            if (PlayerHand[i] == letter_index)
+            var letter_index = ui.draggable["0"].attributes["0"].value;
+            var tile_index = (+event.target.id) - 1;
+
+            for (var i = 0; i < 7; i++)
             {
-              LettersPlayed += letter_index;
-              PlayerHand[i] = null;
-              break;
+              if (PlayerHand[i] == letter_index)
+              {
+                LettersPlayed += letter_index;
+                PlayerHand[i] = null;
+                break;
+              }
             }
-          }
 
-          Board[tile_index] =
-          {
-            letter: letter_index,
-            value: ScrabbleTiles[letter_index].value
-          }
-          turn_score += Board[tile_index].value;
+            Board[tile_index] =
+            {
+              letter: letter_index,
+              value: ScrabbleTiles[letter_index].value
+            }
+            turn_score += Board[tile_index].value;
 
-          $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score );
+            $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score );
+          }
         },
         out: function(event, ui)
         {
@@ -237,6 +249,14 @@ function check()
       }
       reDealTiles();
       createLetterDist();
+
+      for(var i = 0; i < 7; i++)
+      {
+        if (Board[i] != null)
+        {
+          Board[i] = null;
+        }
+      }
     }
     else
     {
