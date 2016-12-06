@@ -254,6 +254,10 @@ function check()
 function createLetterDist()
 {
     var options = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  $("#letterDist1").empty();
+  $("#letterDist2").empty();
+
     for (var i = 0; i < 26; i++)
     {
       if (i < 13)
