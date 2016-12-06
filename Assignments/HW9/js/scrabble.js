@@ -77,8 +77,6 @@ $( function() {
         },
         drop: function( event, ui )
         {
-          if(dragging == false)
-          {
             var letter_index = ui.draggable["0"].attributes["0"].value;
             var tile_index = (+event.target.id) - 1;
 
@@ -100,10 +98,11 @@ $( function() {
             turn_score += Board[tile_index].value;
 
             $("#score").text("turn score: " + turn_score + "\noverall score: " + overall_score );
-          }
         },
         out: function(event, ui)
         {
+          if(dragging == false)
+          {
             var letter_index = ui.draggable["0"].attributes["0"].value;
             var tile_index = (+event.target.id) - 1;
 
@@ -121,6 +120,7 @@ $( function() {
                 break;
               }
             }
+          }
         }
       });
 
